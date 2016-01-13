@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="phoenixministries.biblestudytrainer.ReadingActivity">
+    <item android:id="@+id/reading_to_chooser"
+        android:icon="@drawable/chooser2"
+        android:title="@string/passage_chooser"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+</menu>
