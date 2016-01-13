@@ -214,15 +214,16 @@ public class ReadingActivity extends ActionBarActivity {
             //TODO - Highlight selected passage
             String tempToReplace = passageToDisplay.getText();
             int indexOfSup = tempToReplace.indexOf(">"+selectedVerse+"</sup");
-            int indexOfSupTag = tempToReplace.substring(0,indexOfSup).lastIndexOf("<");
+            int startSpan = tempToReplace.indexOf(">",indexOfSup+1)+1;
+            //tempToReplace.
             //TODO - Replace tags to include a span with background-color
             //tempToReplace.re
             //passageToDisplay.setText();
 
             //Apply parsed text to View
             String pageHtml = passageToDisplay.getText()+"<br>"+passageToDisplay.getCopyright();
-            pageHtml+="<style>body{font-size:1.8em; background: transparent;}</style>";
-            readingWebView.loadData(pageHtml,"text/html","UTF-8");
+            pageHtml+="<link rel='stylesheet' type='text/css' href='reading.css' />";
+            readingWebView.loadDataWithBaseURL("file:///android_asset/", pageHtml,"text/html","UTF-8", null);
             readingWebView.setBackgroundColor(Color.TRANSPARENT);
             headerTextView.setText(currentPassage);
             //readingTextView.setText(Html.fromHtml(passageToDisplay.getText()));
