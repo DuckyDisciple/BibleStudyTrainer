@@ -213,10 +213,10 @@ public class ReadingActivity extends ActionBarActivity {
 
             //Highlight Text
             String passageWithHighlight = passageToDisplay.getText();
-            passageWithHighlight = passageWithHighlight.replaceAll(">"+selectedVerse+"</sup>","$0<span class='highlight'>");
+            passageWithHighlight = passageWithHighlight.replaceAll(">"+selectedVerse+"</sup>","$0<a name='selected'><span class='highlight'>");
             int nextVerse = selectedVerse+1;
             if(passageWithHighlight.contains(">"+nextVerse+"</sup>")){
-                passageWithHighlight = passageWithHighlight.replaceAll("(<sup)[^<]*?>"+nextVerse+"<","</span>"+"$0");
+                passageWithHighlight = passageWithHighlight.replaceAll("(<sup)[^<]*?>"+nextVerse+"<","</span></a>"+"$0");
             }else if(passageWithHighlight.endsWith("</p>")) {
                 passageWithHighlight = passageWithHighlight.substring(0, passageWithHighlight.length() - 4) + "</span></p>";
             }else{
@@ -226,6 +226,8 @@ public class ReadingActivity extends ActionBarActivity {
             //Apply parsed text to View
             String pageHtml = passageWithHighlight+"<br><div id='copyright'>"+passageToDisplay.getCopyright()+"</div>";
             pageHtml+="<link rel='stylesheet' type='text/css' href='reading.css' />";
+            pageHtml+="<script>window.location.hash='selected';</script>";
+            readingWebView.getSettings().setJavaScriptEnabled(true);
             readingWebView.loadDataWithBaseURL("file:///android_asset/", pageHtml,"text/html","UTF-8", null);
             readingWebView.setBackgroundColor(Color.TRANSPARENT);
             headerTextView.setText(currentPassage);
