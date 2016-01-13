@@ -56,6 +56,7 @@ public class ReadingActivity extends ActionBarActivity {
     ScrollView scrollContainer;
     WebView readingWebView;
     String currentPassage;
+    String fumsScript;
     int selectedVerse;
 
     @Override
@@ -209,6 +210,8 @@ public class ReadingActivity extends ActionBarActivity {
 
                 String passageCopyright = getContentsOfTag(result, "copyright");
                 passageToDisplay.setCopyright(passageCopyright);
+
+                fumsScript = getContentsOfTag(result, "fums");
             }
 
             //Highlight Text
@@ -227,6 +230,7 @@ public class ReadingActivity extends ActionBarActivity {
             String pageHtml = passageWithHighlight+"<br><div id='copyright'>"+passageToDisplay.getCopyright()+"</div>";
             pageHtml+="<link rel='stylesheet' type='text/css' href='reading.css' />";
             pageHtml+="<script>window.location.hash='selected';</script>";
+            pageHtml+=fumsScript;
             readingWebView.getSettings().setJavaScriptEnabled(true);
             readingWebView.loadDataWithBaseURL("file:///android_asset/", pageHtml,"text/html","UTF-8", null);
             readingWebView.setBackgroundColor(Color.TRANSPARENT);
@@ -280,6 +284,11 @@ public class ReadingActivity extends ActionBarActivity {
                     int copyStartIndex = xml.indexOf("<copyright>") + 11;
                     int copyEndIndex = xml.indexOf("</copyright>");
                     return  xml.substring(copyStartIndex,copyEndIndex);
+                case "fums":
+                    int fumsPreIndex = xml.indexOf("<fums>") +6;
+                    int fumsStartIndex = xml.indexOf("CDATA[",fumsPreIndex)+6;
+                    int fumsEndIndex = xml.indexOf("]]",fumsStartIndex);
+                    return xml.substring(fumsStartIndex,fumsEndIndex);
             }
             return "";
         }
