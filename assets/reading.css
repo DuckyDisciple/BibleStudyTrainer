@@ -1,4 +1,12 @@
 body{
-    font-size:1.8em;
+    font-size:1.6em;
     background: transparent;
+}
+
+.highlight{
+    background: yellow;
+}
+
+#copyright{
+    font-size: 0.5em;
 }
