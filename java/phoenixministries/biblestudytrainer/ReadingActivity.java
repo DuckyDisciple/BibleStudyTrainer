@@ -1,5 +1,6 @@
 package phoenixministries.biblestudytrainer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,55 +10,56 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Xml;
+//import android.text.Html;
+//import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+//import android.view.View;
 import android.webkit.WebView;
-import android.widget.ScrollView;
+//import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.apache.http.HttpConnection;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+//import org.apache.http.HttpConnection;
+//import org.xmlpull.v1.XmlPullParser;
+//import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
+//import java.io.Reader;
 import java.net.Authenticator;
-import java.net.HttpURLConnection;
+//import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.security.KeyStore;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
+//import java.security.KeyStore;
+//import java.security.cert.CertificateException;
+//import java.security.cert.X509Certificate;
+//import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
+//import javax.net.ssl.SSLContext;
+//import javax.net.ssl.TrustManager;
+//import javax.net.ssl.TrustManagerFactory;
+//import javax.net.ssl.X509TrustManager;
 
-import phoenixministries.biblestudytrainer.R;
+//import phoenixministries.biblestudytrainer.R;
 
 //TODO - Add route to chooser button
 
 public class ReadingActivity extends ActionBarActivity {
 
     //WebView readingWebView;
-    TextView readingTextView;
-    TextView copyrightTextView;
+    //TextView readingTextView;
+    //TextView copyrightTextView;
     TextView headerTextView;
     Passage passageToDisplay;
-    ScrollView scrollContainer;
+    //ScrollView scrollContainer;
     WebView readingWebView;
     String currentPassage;
     String fumsScript;
     int selectedVerse;
+    String requestedVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class ReadingActivity extends ActionBarActivity {
         headerTextView.setText(currentPassage);
 
         //TODO - Setup checker for chosen version
-        String requestedVersion = getString(R.string.defaultVersion);
+        requestedVersion = getString(R.string.defaultVersion);
 
         passageToDisplay = new Passage(
                 b.getString("book"), b.getInt("chapter"), b.getInt("verse"), requestedVersion);
@@ -89,11 +91,10 @@ public class ReadingActivity extends ActionBarActivity {
 
         //Connected
         if(netInfo != null && netInfo.isConnected()){
-            String passageText = passage;
             String versionShort = "eng-ESV";
 
             //Downloads full chapter
-            passage = passage.replace(" ","+");
+            passage = passage != null ? passage.replace(" ", "+") : null;
             String url = "https://" +
                     getString(R.string.api_url) + passage + "&version=" + versionShort;
 
@@ -105,13 +106,13 @@ public class ReadingActivity extends ActionBarActivity {
             //readingTextView.setText(passageText);
 
         }else{
-            headerTextView.setText("Error: No network connection");
+            headerTextView.setText(getText(R.string.network_error));
         }
     }
 
     private String downloadUrl(String myUrl) throws IOException{
         InputStream is = null;
-        int len = 500;
+        //int len = 500;
 
         try{
             URL url = new URL(myUrl);
@@ -167,7 +168,7 @@ public class ReadingActivity extends ActionBarActivity {
             connection.setDefaultSSLSocketFactory(sc.getSocketFactory());*/
 
             connection.connect();
-            int responseCode = connection.getResponseCode();
+            //int responseCode = connection.getResponseCode();
             is=connection.getInputStream();
 
             //TODO - Create XML parser for InputStream
@@ -192,8 +193,12 @@ public class ReadingActivity extends ActionBarActivity {
 
     private class DownloadWebpageTask extends AsyncTask<String, Void, String>{
         @Override
-        protected String doInBackground(String... urls){
+        protected void onPreExecute(){
             showLoadingPage();
+        }
+
+        @Override
+        protected String doInBackground(String... urls){
             try{
                 return downloadUrl(urls[0]);
             }catch (IOException e) {
@@ -201,6 +206,7 @@ public class ReadingActivity extends ActionBarActivity {
             }
         }
 
+        @SuppressLint("SetJavaScriptEnabled")
         @Override
         protected void onPostExecute(String result){
             if(result.contains("<")) {
@@ -270,7 +276,7 @@ public class ReadingActivity extends ActionBarActivity {
         }
 
         private void showLoadingPage(){
-            headerTextView.setText("Loading...");
+            headerTextView.setText(getText(R.string.loading));
         }
 
         private String getContentsOfTag(String xml, String tag){
@@ -313,6 +319,12 @@ public class ReadingActivity extends ActionBarActivity {
             case R.id.reading_to_chooser:
                 goToChooser();
                 return true;
+            case R.id.prev_chapter:
+                previousChapter();
+                return true;
+            case R.id.next_chapter:
+                nextChapter();
+                return true;
             case R.id.action_settings:
                 //settings
                 return true;
@@ -321,6 +333,7 @@ public class ReadingActivity extends ActionBarActivity {
         }
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void goToChooser(){
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(
                 "phoenixministries.biblestudytrainer.PREFERENCE_FILE_KEY",Context.MODE_PRIVATE);
@@ -331,5 +344,99 @@ public class ReadingActivity extends ActionBarActivity {
         editor.commit();
         startActivity(intent);
         finish();
+    }
+
+    private void previousChapter(){
+        Bundle b = BibleStructure.getPreviousChapter(currentPassage);
+        String newBook = b.getString("book");
+        int newChap = b.getInt("chapter");
+        int newVerse = b.getInt("verse");
+        String passage = newBook+" "+newChap;
+        currentPassage = newBook+" "+newChap+":"+newVerse;
+        selectedVerse = newVerse;
+        passageToDisplay = new Passage(
+                newBook, newChap, newVerse, requestedVersion);
+
+        //Update saved location
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(
+                "phoenixministries.biblestudytrainer.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putInt("selected_book_id",b.getInt("bookId"));
+        editor.putInt("selected_chapter_id",newChap-1);
+        editor.putInt("selected_verse_id",newVerse-1);
+        editor.apply();
+
+        //Check connectivity
+        ConnectivityManager conMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        //Connected
+        if(netInfo != null && netInfo.isConnected()){
+            String versionShort = "eng-ESV";
+
+            //Downloads full chapter
+            passage = passage.replace(" ","+");
+            String url = "https://" +
+                    getString(R.string.api_url) + passage + "&version=" + versionShort;
+
+            //passageText=downloadUrl(url);
+            DownloadWebpageTask downloadWebpageTask = new DownloadWebpageTask();
+            downloadWebpageTask.execute(url);
+
+
+            //readingTextView.setText(passageText);
+
+        }else{
+            headerTextView.setText(getText(R.string.network_error));
+        }
+    }
+
+    private void nextChapter(){
+        Bundle b = BibleStructure.getNextChapter(currentPassage);
+        String newBook = b.getString("book");
+        int newChap = b.getInt("chapter");
+        int newVerse = b.getInt("verse");
+        String passage = newBook+" "+newChap;
+        currentPassage = newBook+" "+newChap+":"+newVerse;
+        selectedVerse = newVerse;
+        passageToDisplay = new Passage(
+                newBook, newChap, newVerse, requestedVersion);
+
+        //Update saved location
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(
+                "phoenixministries.biblestudytrainer.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putInt("selected_book_id",b.getInt("bookId"));
+        editor.putInt("selected_chapter_id",newChap-1);
+        editor.putInt("selected_verse_id",newVerse-1);
+        editor.apply();
+
+        //Check connectivity
+        ConnectivityManager conMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        //Connected
+        if(netInfo != null && netInfo.isConnected()){
+            String versionShort = "eng-ESV";
+
+            //Downloads full chapter
+            passage = passage.replace(" ","+");
+            String url = "https://" +
+                    getString(R.string.api_url) + passage + "&version=" + versionShort;
+
+            //passageText=downloadUrl(url);
+            DownloadWebpageTask downloadWebpageTask = new DownloadWebpageTask();
+            downloadWebpageTask.execute(url);
+
+
+            //readingTextView.setText(passageText);
+
+        }else{
+            headerTextView.setText(getText(R.string.network_error));
+        }
     }
 }

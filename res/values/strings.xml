@@ -7,6 +7,8 @@
     <string name="reading_button">Reading</string>
     <string name="search_button">Search</string>
     <string name="passage_chooser">Passage Chooser</string>
+    <string name="previous_chapter">Previous Chapter</string>
+    <string name="next_chapter">Next Chapter</string>
 
     <!-- ACTIVITY TITLES -->
     <string name="home_title">Bible Study Trainer</string>
@@ -29,6 +31,12 @@
     <string name="preference_file_key">phoenixministries.biblestudytrainer.PREFERENCE_FILE_KEY</string>
     <string name="defaultVersion">English Standard Version</string>
     <string name="defaultVersionShort">ESV-eng</string>
+
+    <!-- STATUS -->
+    <string name="loading">Loading…</string>
+
+    <!-- ERRORS -->
+    <string name="network_error">Error: No network connection</string>
 
     <!-- API REFERENCE -->
     <string name="api_key">pDCQp4vJfg9PoxB0E8zLU33NfAaSVyLXJQj63rM8</string>
