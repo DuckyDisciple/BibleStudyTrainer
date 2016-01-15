@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bible Study Trainer</string>
+    <string name="app_name">Quick Bible</string>
 
     <!-- BUTTON LABELS -->
     <string name="action_settings">Settings</string>
@@ -11,7 +11,7 @@
     <string name="next_chapter">Next Chapter</string>
 
     <!-- ACTIVITY TITLES -->
-    <string name="home_title">Bible Study Trainer</string>
+    <string name="home_title">Quick Bible</string>
     <string name="title_activity_reading">Reading</string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_passage_chooser">PassageChooser</string>
