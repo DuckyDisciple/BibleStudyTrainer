@@ -1,12 +1,18 @@
 body{
     font-size:1.6em;
+    color: #222;
     background: transparent;
 }
 
 .highlight{
-    background: yellow;
+    background: #42a5f5;
 }
 
 #copyright{
     font-size: 0.5em;
+}
+
+sup{
+    vertical-align: top;
+    font-size: 0.6em;
 }

@@ -1,29 +1,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
+    android:paddingTop="20dp"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:background="@color/toolbar"
     tools:context=".HomeActivity">
 
     <TextView android:text="@string/home_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:textAppearance="@style/heading_style"/>
+        android:textColor="@color/primary_text_default_material_dark"
+        android:textSize="35sp"
+        android:typeface="serif"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/home_text"
+        android:text="@string/home_text"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="40dp"
+        android:background="@color/window_background"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"/>
+
+    <!--
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/plans_button"
         android:onClick="showPlans"/>
+        -->
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reading_button"
-        android:onClick="showReading"/>
+        android:onClick="showReading"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"
+        android:padding="15dp"
+        android:background="@color/button"/>
 
+    <!--
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,5 +59,6 @@
         android:layout_height="wrap_content"
         android:text="Debug"
         android:onClick="debugTesting"/>
+        -->
 
 </LinearLayout>

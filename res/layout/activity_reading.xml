@@ -5,13 +5,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@color/text_background"
     tools:context="phoenixministries.biblestudytrainer.ReadingActivity">
 
     <TextView
         android:id="@+id/readingHeader"
         android:text="@string/reading_button"
         android:textAppearance="@style/reading_header"
+        android:textColor="@color/text"
+        android:textSize="30sp"
         android:layout_gravity="right"
+        android:paddingRight="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

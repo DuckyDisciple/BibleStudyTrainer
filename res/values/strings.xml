@@ -4,7 +4,7 @@
     <!-- BUTTON LABELS -->
     <string name="action_settings">Settings</string>
     <string name="plans_button">Plans</string>
-    <string name="reading_button">Reading</string>
+    <string name="reading_button">Start Reading</string>
     <string name="search_button">Search</string>
     <string name="passage_chooser">Passage Chooser</string>
     <string name="previous_chapter">Previous Chapter</string>
@@ -34,6 +34,7 @@
 
     <!-- STATUS -->
     <string name="loading">Loading…</string>
+    <string name="home_text">Welcome to the Quick Bible app. This app provides a quick way to find the Bible verses that you need on the fly, or read through the whole Bible. More features will be added on, but for now you can enjoy this simple Bible app.</string>
 
     <!-- ERRORS -->
     <string name="network_error">Error: No network connection</string>

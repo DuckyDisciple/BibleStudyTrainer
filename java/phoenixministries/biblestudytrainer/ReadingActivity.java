@@ -80,6 +80,7 @@ public class ReadingActivity extends ActionBarActivity {
         passageToDisplay = new Passage(
                 b.getString("book"), b.getInt("chapter"), b.getInt("verse"), requestedVersion);
         readingWebView = (WebView)findViewById(R.id.reading_webview);
+        readingWebView.setBackgroundColor(Color.TRANSPARENT);
         //readingTextView = (TextView)findViewById(R.id.readingContent);
         //copyrightTextView = (TextView)findViewById(R.id.copyrightContent);
         //scrollContainer = (ScrollView)findViewById(R.id.reading_scroll);
@@ -238,8 +239,7 @@ public class ReadingActivity extends ActionBarActivity {
             pageHtml+="<script>window.location.hash='selected';</script>";
             pageHtml+=fumsScript;
             readingWebView.getSettings().setJavaScriptEnabled(true);
-            readingWebView.loadDataWithBaseURL("file:///android_asset/", pageHtml,"text/html","UTF-8", null);
-            readingWebView.setBackgroundColor(Color.TRANSPARENT);
+            readingWebView.loadDataWithBaseURL("file:///android_asset/", pageHtml, "text/html", "UTF-8", null);
             headerTextView.setText(currentPassage);
             //readingTextView.setText(Html.fromHtml(passageToDisplay.getText()));
             //copyrightTextView.setText(passageToDisplay.getCopyright());
