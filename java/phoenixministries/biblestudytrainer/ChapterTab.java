@@ -22,8 +22,8 @@ public class ChapterTab extends Fragment {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private int selectedBook;
-    private int defaultBackgroundColor = Color.WHITE;
-    private int selectedBackgroundColor = Color.CYAN;
+    private int defaultBackgroundColor = Color.parseColor("#fcfbe3");
+    private int selectedBackgroundColor = Color.parseColor("#42a5f5");
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle saveInstanceState){
         View v = inflater.inflate(R.layout.tab_chapter, container, false);

@@ -26,8 +26,8 @@ public class BookTab extends Fragment {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private int selectedBookId = -1;
-    private int defaultBackgroundColor = Color.WHITE;
-    private int selectedBackgroundColor = Color.CYAN;
+    private int defaultBackgroundColor = Color.parseColor("#fcfbe3");
+    private int selectedBackgroundColor = Color.parseColor("#42a5f5");
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -41,6 +41,8 @@ public class BookTab extends Fragment {
         sharedPreferences = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+
 
         for(int i=0; i < BibleStructure.getBooks().length; i++) {
             //setup layout for Book tab
